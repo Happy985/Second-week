@@ -1,0 +1,25 @@
+#Exercice 1. Tri fusion. Écrire une fonction fusion(L1,L2) réalisant la fusion de deux listes triées. En déduire une
+#implémentation Python du tri fusion, qui renvoie une copie triée de la liste.
+
+
+L1=[3,7,8,15,17]
+L2=[2,5,9,12,18,30]
+
+def fusion(L1, L2):
+    R=[]
+    if L1==[]:
+        return L2
+    elif L2==[]:
+        return L1
+    elif L1[0]<=L2[0]:
+        R.append(L1[0])
+        if len(L1)==1:
+            return R + fusion([], L2)
+        else:
+            return R + fusion(L1[1:], L2)
+    else:
+        R.append(L2[0])
+        if len(L2)==1:
+            return R + fusion(L1, [])
+        else:
+            return R + fusion(L1, L2[1:])
