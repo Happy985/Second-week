@@ -1,0 +1,50 @@
+#Exercice 3. Flocon de Von Koch. Le but de cet exercice est de tracer une ligne brisée qui s’approche de l’objet fractal
+#appelé le Flocon de Von Koch.
+
+
+def trace(a,b,c):
+    x0,y0=a
+    x1,y1=b
+    plt.plot([x0,x1],[y0,y1], color=c)
+    
+def droite(x,y):
+    x0, y0=x
+    x1, y1=y
+    px=(x1-x0)/3
+    py=(y1-y0)/3
+    ang=np.arctan(py/px)+np.pi/3
+    if x0>=x1:
+        ang+=np.pi
+    n=np.sqrt(pow((x1-x0-2*px),2)+pow((y1-y0-2*py),2))
+    
+    a1=x
+    a2=np.array([x0+px , y0+py])
+    a3=np.array([x0+px+n*(np.cos(ang)) , y0+py+n*(np.sin(ang))])
+    a4=np.array([x1-px , y1-py])
+    a5=y
+    D=[a1,a2,a3,a4,a5]
+    return D
+
+
+
+def flocon(i):
+    plt.figure(figsize=(12,12))
+    plt.axis("equal")
+    plt.axis(draw=None)
+    a=np.array([0,0])
+    b=np.array([1,0])
+    c=np.array([0.5,np.sqrt(3)/2])
+    def koch(n,x,y,c):
+        trace(x,y,c)
+        if (n<i) and (c=='black'):
+            D=droite(x,y)
+            koch(n+1,D[0],D[1],'black')
+            koch(n+1,D[1],D[2],'black')
+            koch(n+1,D[2],D[3],'black')
+            koch(n+1,D[3],D[4],'black')
+            koch(n+1,D[1],D[3],'white')
+            
+    koch(1,a,c,'black')
+    koch(1,c,b,'black')
+    koch(1,b,a,'black')
+    plt.show()
